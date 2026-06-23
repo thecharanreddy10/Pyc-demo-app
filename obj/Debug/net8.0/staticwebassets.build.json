@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "JpF44pgD/LNDPgDIB+hKEa2S4aqKmbFThg6axe+J7/c=",
+  "Source": "PayrollApp",
+  "BasePath": "_content/PayrollApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "PayrollApp\\wwwroot",
+      "Source": "PayrollApp",
+      "ContentRoot": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\",
+      "BasePath": "_content/PayrollApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\css\\site.css",
+      "SourceId": "PayrollApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\",
+      "BasePath": "_content/PayrollApp",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\js\\site.js",
+      "SourceId": "PayrollApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\",
+      "BasePath": "_content/PayrollApp",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ]
+}

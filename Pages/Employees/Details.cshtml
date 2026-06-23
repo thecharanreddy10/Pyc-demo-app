@@ -1,0 +1,102 @@
+@page
+@model PayrollApp.Pages.Employees.DetailsModel
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h1>Employee Details</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">@Model.Employee.Name</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Employee ID</dt>
+                    <dd class="col-sm-8">@Model.Employee.EmployeeId</dd>
+
+                    <dt class="col-sm-4">Name</dt>
+                    <dd class="col-sm-8">@Model.Employee.Name</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">@Model.Employee.Email</dd>
+
+                    <dt class="col-sm-4">Department</dt>
+                    <dd class="col-sm-8">@Model.Employee.Department</dd>
+
+                    <dt class="col-sm-4">Employment Type</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.Employee.EmploymentType == PayrollApp.Models.EmploymentType.Salaried ? "info" : "success")">
+                            @Model.Employee.EmploymentType
+                        </span>
+                    </dd>
+
+                    @if (Model.Employee.EmploymentType == PayrollApp.Models.EmploymentType.Salaried)
+                    {
+                        <dt class="col-sm-4">Annual Salary</dt>
+                        <dd class="col-sm-8">$@Model.Employee.AnnualSalary?.ToString("N2")</dd>
+                        
+                        <dt class="col-sm-4">Monthly Salary</dt>
+                        <dd class="col-sm-8">$@((Model.Employee.AnnualSalary / 12)?.ToString("N2"))</dd>
+                    }
+                    else
+                    {
+                        <dt class="col-sm-4">Hourly Rate</dt>
+                        <dd class="col-sm-8">$@Model.Employee.HourlyRate?.ToString("N2")/hour</dd>
+                    }
+
+                    <dt class="col-sm-4">Hire Date</dt>
+                    <dd class="col-sm-8">@Model.Employee.HireDate.ToString("MMMM dd, yyyy")</dd>
+
+                    <dt class="col-sm-4">Years of Service</dt>
+                    <dd class="col-sm-8">@((DateTime.Today - Model.Employee.HireDate).Days / 365.25) years</dd>
+                </dl>
+            </div>
+        </div>
+
+        @if (Model.PayrollRecords.Any())
+        {
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Recent Payroll History</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Pay Period</th>
+                                    <th>Gross Pay</th>
+                                    <th>Deductions</th>
+                                    <th>Net Pay</th>
+                                    <th>Payment Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.PayrollRecords)
+                                {
+                                    <tr>
+                                        <td>@record.PayPeriodStart.ToString("MM/dd/yyyy") - @record.PayPeriodEnd.ToString("MM/dd/yyyy")</td>
+                                        <td>$@record.GrossPay.ToString("N2")</td>
+                                        <td>$@record.TotalDeductions.ToString("N2")</td>
+                                        <td><strong>$@record.NetPay.ToString("N2")</strong></td>
+                                        <td>@record.PaymentDate.ToString("MM/dd/yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="mt-4">
+            <a asp-page="Edit" asp-route-id="@Model.Employee.Id" class="btn btn-warning">Edit</a>
+            <a asp-page="Delete" asp-route-id="@Model.Employee.Id" class="btn btn-danger">Delete</a>
+            <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

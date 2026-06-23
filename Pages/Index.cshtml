@@ -1,0 +1,168 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-4">Payroll Management Dashboard</h1>
+    <p class="lead">Welcome to your simple payroll application</p>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Employees</h5>
+                <h2 class="display-4">@Model.TotalEmployees</h2>
+                <a asp-page="/Employees/Index" class="btn btn-light btn-sm mt-2">View All</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Salaried</h5>
+                <h2 class="display-4">@Model.SalariedEmployees</h2>
+                <small>Employees</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Hourly</h5>
+                <h2 class="display-4">@Model.HourlyEmployees</h2>
+                <small>Employees</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Payroll Records</h5>
+                <h2 class="display-4">@Model.TotalPayrollRecords</h2>
+                <a asp-page="/Payroll/History" class="btn btn-light btn-sm mt-2">View History</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">This Month's Payroll Summary</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.CurrentMonthGrossPay > 0)
+                {
+                    <dl class="row mb-0">
+                        <dt class="col-sm-6">Total Gross Pay:</dt>
+                        <dd class="col-sm-6 text-end">$@Model.CurrentMonthGrossPay.ToString("N2")</dd>
+
+                        <dt class="col-sm-6">Total Deductions:</dt>
+                        <dd class="col-sm-6 text-end text-danger">$@Model.CurrentMonthDeductions.ToString("N2")</dd>
+
+                        <dt class="col-sm-6 border-top pt-2">Total Net Pay:</dt>
+                        <dd class="col-sm-6 text-end border-top pt-2">
+                            <strong class="text-success">$@Model.CurrentMonthNetPay.ToString("N2")</strong>
+                        </dd>
+
+                        <dt class="col-sm-6">Payroll Runs:</dt>
+                        <dd class="col-sm-6 text-end">@Model.CurrentMonthPayrollCount</dd>
+                    </dl>
+                }
+                else
+                {
+                    <p class="text-muted mb-0">No payroll processed this month yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-page="/Employees/Create" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus"></i> Add New Employee
+                    </a>
+                    <a asp-page="/Payroll/Process" class="btn btn-success btn-lg">
+                        <i class="bi bi-calculator"></i> Process Payroll
+                    </a>
+                    <a asp-page="/Payroll/History" class="btn btn-info btn-lg text-white">
+                        <i class="bi bi-clock-history"></i> View Payment History
+                    </a>
+                    <a asp-page="/Employees/Index" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-people"></i> Manage Employees
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.RecentPayrollRecords.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Recent Payroll Activity</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Employee</th>
+                                    <th>Pay Period</th>
+                                    <th>Gross Pay</th>
+                                    <th>Net Pay</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.RecentPayrollRecords)
+                                {
+                                    <tr>
+                                        <td>@record.PaymentDate.ToString("MM/dd/yyyy")</td>
+                                        <td>
+                                            <strong>@record.Employee?.Name</strong><br />
+                                            <small class="text-muted">@record.Employee?.EmployeeId</small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                @record.PayPeriodStart.ToString("MM/dd") - 
+                                                @record.PayPeriodEnd.ToString("MM/dd/yy")
+                                            </small>
+                                        </td>
+                                        <td>$@record.GrossPay.ToString("N2")</td>
+                                        <td class="text-success"><strong>$@record.NetPay.ToString("N2")</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        <h5>Get Started!</h5>
+        <p>Welcome to the Payroll Application. Here's how to get started:</p>
+        <ol>
+            <li>The system has been pre-populated with sample employees</li>
+            <li>Go to <a asp-page="/Employees/Index" class="alert-link">Employees</a> to view or manage them</li>
+            <li>Click <a asp-page="/Payroll/Process" class="alert-link">Process Payroll</a> to generate your first payroll</li>
+            <li>View payment history and reports anytime</li>
+        </ol>
+    </div>
+}

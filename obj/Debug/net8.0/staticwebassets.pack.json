@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Db poc\\sample pay v2\\sample-pay\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PayrollApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PayrollApp.props",
+      "PackagePath": "build\\PayrollApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PayrollApp.props",
+      "PackagePath": "buildMultiTargeting\\PayrollApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PayrollApp.props",
+      "PackagePath": "buildTransitive\\PayrollApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

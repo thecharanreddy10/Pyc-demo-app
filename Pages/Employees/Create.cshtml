@@ -1,0 +1,107 @@
+@page
+@model PayrollApp.Pages.Employees.CreateModel
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<h1>Create New Employee</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="Employee.EmployeeId" class="form-label"></label>
+                <input asp-for="Employee.EmployeeId" class="form-control" placeholder="e.g., EMP001" />
+                <span asp-validation-for="Employee.EmployeeId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Employee.Name" class="form-label"></label>
+                <input asp-for="Employee.Name" class="form-control" placeholder="Full Name" />
+                <span asp-validation-for="Employee.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Employee.Email" class="form-label"></label>
+                <input asp-for="Employee.Email" class="form-control" type="email" placeholder="email@company.com" />
+                <span asp-validation-for="Employee.Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Employee.Department" class="form-label"></label>
+                <input asp-for="Employee.Department" class="form-control" placeholder="e.g., Engineering, Sales" />
+                <span asp-validation-for="Employee.Department" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Employee.EmploymentType" class="form-label"></label>
+                <select asp-for="Employee.EmploymentType" class="form-select" id="employmentTypeSelect">
+                    <option value="">-- Select Employment Type --</option>
+                    <option value="0">Salaried</option>
+                    <option value="1">Hourly</option>
+                </select>
+                <span asp-validation-for="Employee.EmploymentType" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3" id="salaryField" style="display:none;">
+                <label asp-for="Employee.AnnualSalary" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="Employee.AnnualSalary" class="form-control" type="number" step="0.01" placeholder="75000" />
+                </div>
+                <span asp-validation-for="Employee.AnnualSalary" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3" id="hourlyRateField" style="display:none;">
+                <label asp-for="Employee.HourlyRate" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="Employee.HourlyRate" class="form-control" type="number" step="0.01" placeholder="25.00" />
+                    <span class="input-group-text">/hour</span>
+                </div>
+                <span asp-validation-for="Employee.HourlyRate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Employee.HireDate" class="form-label"></label>
+                <input asp-for="Employee.HireDate" class="form-control" type="date" />
+                <span asp-validation-for="Employee.HireDate" class="text-danger"></span>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Create Employee</button>
+                <a asp-page="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const employmentTypeSelect = document.getElementById('employmentTypeSelect');
+            const salaryField = document.getElementById('salaryField');
+            const hourlyRateField = document.getElementById('hourlyRateField');
+
+            employmentTypeSelect.addEventListener('change', function() {
+                if (this.value === '0') { // Salaried
+                    salaryField.style.display = 'block';
+                    hourlyRateField.style.display = 'none';
+                } else if (this.value === '1') { // Hourly
+                    salaryField.style.display = 'none';
+                    hourlyRateField.style.display = 'block';
+                } else {
+                    salaryField.style.display = 'none';
+                    hourlyRateField.style.display = 'none';
+                }
+            });
+
+            // Trigger on page load if value is set
+            employmentTypeSelect.dispatchEvent(new Event('change'));
+        });
+    </script>
+}
